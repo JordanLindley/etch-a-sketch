@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap');
 
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
 body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   background-color:#27272e;
@@ -7,6 +11,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+ 
   min-height: 100vh;
   margin: auto;
   max-width: 800px;
@@ -23,17 +28,19 @@ body {
 }
 
 .container  {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(16, 25px [col-start]);
+  /* grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); */
+  padding: 1em;
   justify-content: center;
-  padding: 20px;
 }
 
 .grid {
-  padding: 5px;
-  width: 100px;
-  height: 100px;
-  border: thin solid black;
-  background-color: #27272e;
+    padding: 10px;
+  min-width: 1.5em;
+  min-height: 1.5em;
+  border: 1px solid gray;
+  background-color: #161b1e;
 }
 
 .footer {
