@@ -6,8 +6,8 @@
 
 body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  background-color:#27272e;
-  color: #a5a5b8;
+  background-color: #162330;
+  color: white;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -27,20 +27,44 @@ body {
   flex-direction: column;
 }
 
+.controls {
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  border: none;
+  border-radius: 8px;
+  transition: all .07s ease;
+  margin: 25px;
+  padding: 8px;
+  font-weight: 600;
+  align-items: center;
+  color: #162330;
+}
+
+.button-hover {
+  transform: scale(1.01);
+  border: 1px solid gold;
+  box-shadow: 0 0 1rem #ffc600;
+}
+
 .container  {
   display: grid;
-  grid-template-columns: repeat(16, 25px [col-start]);
+  grid-template-columns: repeat(16, 45px [col-start]);
+  grid-template-rows: repeat(16, 45px [row-start]);
   /* grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); */
   padding: 1em;
   justify-content: center;
 }
 
 .grid {
-    padding: 10px;
+  padding: 10px;
   min-width: 1.5em;
   min-height: 1.5em;
   border: 1px solid gray;
-  background-color: #161b1e;
+  background-color: white;
+  transition: all .07s ease;
 }
 
 .footer {
@@ -49,4 +73,9 @@ body {
   justify-content: center;
   align-items: center;
   padding: 48px;
+  color: #484d8a;
+}
+
+.hovered {
+  background-color: black;
 }
