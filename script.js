@@ -1,27 +1,19 @@
 const container = document.querySelector('.container');
-// const buttons = document.querySelectorAll('button');
 const clearButton = document.querySelector('.clear');
 const resizeButton = document.querySelector('.resize');
-const rgbButton = document.querySelector('.rgb');
+const colorButtons = document.querySelectorAll('.color');
+const rainbowButton = document.querySelector('.rainbow');
+const shadeButton = document.querySelector('.shade');
+const classicButton = document.querySelector('.classic');
 
-// **** removeButtonHover not functional. Will fix in the future ****
+// ink color and picker
+let drawColor = '#000000';
 
-// make the buttons look nice when you hover over them with your mouse.
-// buttons.forEach(button => button.addEventListener('mouseover', () => {
-//   button.classList.add('button-hover');
-// }))
-
-// // remove button border and transform.
-// const removeButtonBorder = (event) => {
-//   if (event.propertyName !== 'transform') return; // skip if not a transform
-//   buttons.classList.remove('button-hover');
-// }
 
 // **** DRAW GRID ****
 // area of grid
 let gridSize = 16;
 const maxWidth  = 600;
-
 
 // loop up to the area of the grid, append Divs to generate grid. CSS to style into actual grid.
 const populateDivs = (gridSize) => {
@@ -35,7 +27,7 @@ const populateDivs = (gridSize) => {
     cell.style.height = `${maxWidth / gridSize}px`;
     cell.style.width = `${maxWidth / gridSize}px`;
     // add event listener to draw on grid
-    cell.addEventListener('mouseenter', () => cell.classList.add('hovered'));
+    cell.addEventListener('mouseenter', () => cell.style.backgroundColor = drawColor);
 
     container.appendChild(cell);
   }
@@ -47,7 +39,7 @@ let gridCells = document.querySelectorAll('.grid');
 
 // clear button functionality, remove 'hovered' fom all gridCells
 const clearCells = () => {
-  gridCells.forEach(cell => cell.classList.remove('hovered'));
+  gridCells.forEach(cell => cell.style.backgroundColor = 'white');
 }
 
 clearButton.addEventListener('click', clearCells);
