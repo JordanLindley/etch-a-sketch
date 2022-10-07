@@ -2,6 +2,8 @@
 
 *, *:before, *:after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -11,7 +13,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
- 
+  align-items: center;
   min-height: 100vh;
   margin: auto;
   max-width: 800px;
@@ -51,14 +53,19 @@ button {
 
 .container  {
   display: grid;
-  grid-template-columns: repeat(16, 45px [col-start]);
-  grid-template-rows: repeat(16, 45px [row-start]);
+  /* grid-template-columns: repeat(16, 45px [col-start]);
+  grid-template-rows: repeat(16, 45px [row-start]); */
   /* grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); */
   padding: 1em;
   justify-content: center;
+  height: 600px;
+  width: 600px;
+  margin-bottom: 120px;
+  line-height: 0;
 }
 
 .grid {
+  flex: 1;
   padding: 10px;
   min-width: 1.5em;
   min-height: 1.5em;
@@ -78,4 +85,8 @@ button {
 
 .hovered {
   background-color: black;
+}
+
+.rainbow {
+  
 }
