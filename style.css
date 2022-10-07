@@ -62,6 +62,8 @@ button {
   width: 600px;
   margin-bottom: 120px;
   line-height: 0;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .grid {
@@ -72,6 +74,11 @@ button {
   border: 1px solid gray;
   background-color: white;
   transition: all .07s ease;
+
+float:right;
+  overflow:hidden;
+  box-sizing: border-box;
+  margin: auto;
 }
 
 .footer {
@@ -88,5 +95,5 @@ button {
 }
 
 .rainbow {
-  
+
 }

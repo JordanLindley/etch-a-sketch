@@ -20,6 +20,8 @@ const rgbButton = document.querySelector('.rgb');
 // **** DRAW GRID ****
 // area of grid
 let gridSize = 16;
+const maxWidth  = 600;
+
 
 // loop up to the area of the grid, append Divs to generate grid. CSS to style into actual grid.
 const populateDivs = (gridSize) => {
@@ -30,17 +32,18 @@ const populateDivs = (gridSize) => {
     let cell = document.createElement('div');
     // add new class to differentiate grid boxes by class.
     cell.classList.add('item-' + (i + 1), 'grid');
+    cell.style.height = `${maxWidth / gridSize}px`;
+    cell.style.width = `${maxWidth / gridSize}px`;
+    // add event listener to draw on grid
+    cell.addEventListener('mouseenter', () => cell.classList.add('hovered'));
+
     container.appendChild(cell);
   }
 }
-
+// call inital populate divs function to begin program with a 16x16 grid.
 populateDivs(gridSize);
 
-const gridCells = document.querySelectorAll('.grid');
-
-const draw = (gridCells) => { 
-  gridCells.forEach(gridCell => gridCell.addEventListener('mouseover', () => gridCell.classList.add('hovered')));
-}
+let gridCells = document.querySelectorAll('.grid');
 
 // clear button functionality, remove 'hovered' fom all gridCells
 const clearCells = () => {
@@ -49,14 +52,25 @@ const clearCells = () => {
 
 clearButton.addEventListener('click', clearCells);
 
+// take user entry, call populateDivs(user entry)
 const resizeGrid = () => {
-  gridSize = prompt('How many rows and columns? (1 - 100)', '16');
+  // first, start with a blank slate by removing gridCells divs.
   gridCells.forEach(gridCell => gridCell.remove());
-  if (parseInt(gridSize) > 100) {
-    alert('Whoa! Too many squares. Try a little smaller!');
-   } else {
-    populateDivs(parseInt(gridSize));
+  // prompt user, default to 16
+  gridSize = prompt('How many rows and columns? (1 - 100)', '16');
+  // if user entry is not a number, scold them ask again.
+  if (isNaN(gridSize) == true) {
+    alert('You need to enter a number between 1 and 100!');
+    gridSize = prompt('How many rows and columns? (1 - 100)', '16');
+  // if over 100, scold them and ask again.
+  while (parseInt(gridSize) > 100) {
+    alert('Whoa! Too many squares. Try a little smaller!')
+    gridSize = prompt('How many rows and columns? (1 - 100)', '16');
+   }
+
   }
+  populateDivs(parseInt(gridSize));
+  gridCells = document.querySelectorAll('.grid');
 }
 
 resizeButton.addEventListener('click', resizeGrid);
@@ -64,5 +78,3 @@ resizeButton.addEventListener('click', resizeGrid);
 const randomColor = () => {
   return `hsl(${Math.random() * 360}, 100%, 50%)`;
 }
-
-draw(gridCells);
