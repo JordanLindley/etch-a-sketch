@@ -1,13 +1,14 @@
 const container = document.querySelector('.container');
 const clearButton = document.querySelector('.clear');
 const resizeButton = document.querySelector('.resize');
-const colorButtons = document.querySelectorAll('.color');
+const modeButtons = document.querySelectorAll('.mode');
 const rainbowButton = document.querySelector('.rainbow');
 const shadeButton = document.querySelector('.shade');
 const classicButton = document.querySelector('.classic');
 
 // ink color and picker
 let drawColor = '#000000';
+let mode = 'classic';
 
 const createRGB = () => {
   const r = Math.floor(Math.random() * 256);
@@ -15,6 +16,21 @@ const createRGB = () => {
   const b = Math.floor(Math.random() * 256);
   return `rgb(${r},${g},${b})`;
 }
+
+// const drawClassic = () => {
+//   if (mode == 'classic') {
+//     drawColor = `#000000`;
+//   } else if (mode == 'rainbow') {
+//     drawColor = createRGB();
+//   } else if (mode == 'shading') {
+  
+//   }
+//   (e) => e.style.backgroundColor = drawColor;
+// }
+
+const draw = cell => () => {
+  cell.style.backgroundColor = drawColor;
+};
 
 // **** DRAW GRID ****
 // area of grid
@@ -29,9 +45,7 @@ const populateDivs = (gridSize) => {
   for (let i = 0; i < gridSize*gridSize; i++) {
     let cell = document.createElement('div');
     // add event listener to draw on grid
-    cell.addEventListener('mouseenter', () => { 
-      cell.style.backgroundColor = drawColor;
-    });
+    cell.addEventListener('mouseenter', draw(cell));
     // add new class to differentiate grid boxes by class. Likely not necessary, but I did it anyway.
     cell.classList.add('item-' + (i + 1), 'grid');
     cell.style.height = `${maxWidth / gridSize}px`;
@@ -79,18 +93,36 @@ resizeButton.addEventListener('click', resizeGrid);
 // **** Color changing buttons ****
 // rainbow button
 rainbowButton.addEventListener('click', () => {
-  drawColor = createRGB();
+  mode = 'rainbow';
 })
 
 // classic button
 classicButton.addEventListener('click', () => {
-  drawColor = '#000000';
+  mode = 'classic';
 })
 
-// shade button
-// shadeButton.addEventListener('click', () => {
-  
-// })
+const selectButton = (button) => {
+  if (button.classList.contains('mode')) {
+    modeButtons.forEach((selection) => {
+      selection.classList.remove('btn-on');
+    });
+  }
+  button.classList.add('btn-on');
+}
+
+// const changeMode = () => {
+//   modeButtons[0].classList.add('btn-on');
+
+//   modeButtons.forEach(selection => {
+//     selection.addEventListener('click', () => {
+//       if (selection.classList.contains('classic')) {
+//         draw('classic');
+//         selectButton(selection);
+//         mode = 'classic';
+//       }
+//     })
+//   })
+// }
 
 // // button styling for when active
 // for (let i = 0; i < colorButtons.length; i++) {
