@@ -13,7 +13,7 @@ const createRGB = () => {
   const r = Math.floor(Math.random() * 256);
   const g = Math.floor(Math.random() * 256);
   const b = Math.floor(Math.random() * 256);
-  return { r, g, b };
+  return `rgb(${r},${g},${b})`;
 }
 
 // **** DRAW GRID ****
@@ -86,6 +86,11 @@ rainbowButton.addEventListener('click', () => {
 classicButton.addEventListener('click', () => {
   drawColor = '#000000';
 })
+
+// shade button
+// shadeButton.addEventListener('click', () => {
+  
+// })
 
 // // button styling for when active
 // for (let i = 0; i < colorButtons.length; i++) {
