@@ -58,16 +58,16 @@ const resizeGrid = () => {
   gridCells.forEach(gridCell => gridCell.remove());
   // prompt user, default to 16
   gridSize = prompt('How many rows and columns? (1 - 100)', '16');
-  // if user entry is not a number, scold them ask again.
-  if (isNaN(gridSize) == true) {
-    alert('You need to enter a number between 1 and 100!');
-    gridSize = prompt('How many rows and columns? (1 - 100)', '16');
+
   // if over 100, scold them and ask again.
   while (parseInt(gridSize) > 100) {
     alert('Whoa! Too many squares. Try a little smaller!')
     gridSize = prompt('How many rows and columns? (1 - 100)', '16');
    }
-
+  // if user entry is not a number, scold them ask again.
+  if (isNaN(gridSize) == true) {
+    alert('You need to enter a number between 1 and 100!');
+    gridSize = prompt('How many rows and columns? (1 - 100)', '16');
   }
   populateDivs(parseInt(gridSize));
   gridCells = document.querySelectorAll('.grid');
