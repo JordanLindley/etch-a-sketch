@@ -97,3 +97,9 @@ float:right;
 /* .rainbow {
 
 } */
+
+.btn-on {
+  background-color: #ffc600;
+  color:#162330;
+  transition: all .09s ease;
+}

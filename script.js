@@ -9,6 +9,12 @@ const classicButton = document.querySelector('.classic');
 // ink color and picker
 let drawColor = '#000000';
 
+const createRGB = () => {
+  const r = Math.floor(Math.random() * 256);
+  const g = Math.floor(Math.random() * 256);
+  const b = Math.floor(Math.random() * 256);
+  return { r, g, b };
+}
 
 // **** DRAW GRID ****
 // area of grid
@@ -22,16 +28,19 @@ const populateDivs = (gridSize) => {
   
   for (let i = 0; i < gridSize*gridSize; i++) {
     let cell = document.createElement('div');
-    // add new class to differentiate grid boxes by class.
+    // add event listener to draw on grid
+    cell.addEventListener('mouseenter', () => { 
+      cell.style.backgroundColor = drawColor;
+    });
+    // add new class to differentiate grid boxes by class. Likely not necessary, but I did it anyway.
     cell.classList.add('item-' + (i + 1), 'grid');
     cell.style.height = `${maxWidth / gridSize}px`;
     cell.style.width = `${maxWidth / gridSize}px`;
-    // add event listener to draw on grid
-    cell.addEventListener('mouseenter', () => cell.style.backgroundColor = drawColor);
-
+    
     container.appendChild(cell);
   }
 }
+
 // call inital populate divs function to begin program with a 16x16 grid.
 populateDivs(gridSize);
 
@@ -67,6 +76,62 @@ const resizeGrid = () => {
 
 resizeButton.addEventListener('click', resizeGrid);
 
-const randomColor = () => {
-  return `hsl(${Math.random() * 360}, 100%, 50%)`;
-}
+// **** Color changing buttons ****
+// rainbow button
+rainbowButton.addEventListener('click', () => {
+  drawColor = createRGB();
+})
+
+// classic button
+classicButton.addEventListener('click', () => {
+  drawColor = '#000000';
+})
+
+// // button styling for when active
+// for (let i = 0; i < colorButtons.length; i++) {
+//   colorButtons[i].addEventListener('click', () => {
+//     colorButtons[i].classList.toggle('btn-on');
+//   })
+// }
+
+// // shade toggle
+// let shading = false;
+// shadeButton.addEventListener('click', () => {
+//   if (shading) {
+//     shading = false;
+//   } else {
+//     shading = true;
+//     rainbow = false;
+//     rainbowButton.classList.remove('btn-on');
+//     classic = false;
+//     classicButton.classList.remove('btn-on');
+//   }
+// })
+
+// // rainbow toggle
+// let rainbow = false;
+// rainbowButton.addEventListener('click', () => {
+//   if (rainbow) {
+//     rainbow = false;
+//   } else {
+//     rainbow = true;
+//     shading = false;
+//     shadeButton.classList.remove('btn-on');
+//     classic = false;
+//     classicButton.classList.remove('btn-on');
+//   }
+// })
+
+// // classic toggle
+// let classic = true;
+// rainbowButton.addEventListener('click', () => {
+//   if (classic) {
+//     classic = false;
+//   } else {
+//     classic = true;
+//     rainbow = false;
+//     rainbowButton.classList.remove('btn-on');
+//     shading = false;
+//     shadeButton.classList.remove('btn-on');
+//   }
+// })
