@@ -6,10 +6,11 @@ const rainbowButton = document.querySelector('.rainbow');
 const shadeButton = document.querySelector('.shade');
 const classicButton = document.querySelector('.classic');
 
-// ink color and picker
+// ink color and picker function
 let drawColor = '#000000';
 let mode = 'classic';
 
+// generate random rgb color
 const createRGB = () => {
   const r = Math.floor(Math.random() * 256);
   const g = Math.floor(Math.random() * 256);
@@ -17,35 +18,36 @@ const createRGB = () => {
   return `rgb(${r},${g},${b})`;
 }
 
-// const drawClassic = () => {
-//   if (mode == 'classic') {
-//     drawColor = `#000000`;
-//   } else if (mode == 'rainbow') {
-//     drawColor = createRGB();
-//   } else if (mode == 'shading') {
-  
-//   }
-//   (e) => e.style.backgroundColor = drawColor;
-// }
-
+// curried function, called on line 61. drawEventListener() called by color button event listeners
 const draw = cell => () => {
+  if (mode == 'rainbow') {
+    drawColor = createRGB();
+  } else if (mode == 'shading') {
+    const currentOpacity = cell.style.opacity;
+    // currentOpacity = .1;
+    drawColor = `rgb(0, 0, 0)`;
+    if (currentOpacity >= 0.1) {
+      cell.style.opacity = `${Number(currentOpacity) + 0.1}`;
+    } else cell.style.opacity = 0.1;
+  } else if (mode = 'classic') {
+    drawColor = '#000000';
+  }
   cell.style.backgroundColor = drawColor;
 };
 
 // **** DRAW GRID ****
-// area of grid
+// starting area of grid 16, maintain aspect ratio with maxWidth.
 let gridSize = 16;
 const maxWidth  = 600;
 
-// loop up to the area of the grid, append Divs to generate grid. CSS to style into actual grid.
+// loop up to the area of the grid, append divs to generate grid. CSS to style into actual grid.
 const populateDivs = (gridSize) => {
   container.style.gridTemplateColumns = `repeat(${gridSize}, ${container.offsetWidth / gridSize}px [col-start])`;
   container.style.gridTemplateRows = `repeat(${gridSize}, ${container.offsetWidth / gridSize}px [row-start])`;
   
   for (let i = 0; i < gridSize*gridSize; i++) {
     let cell = document.createElement('div');
-    // add event listener to draw on grid
-    cell.addEventListener('mouseenter', draw(cell));
+
     // add new class to differentiate grid boxes by class. Likely not necessary, but I did it anyway.
     cell.classList.add('item-' + (i + 1), 'grid');
     cell.style.height = `${maxWidth / gridSize}px`;
@@ -60,9 +62,17 @@ populateDivs(gridSize);
 
 let gridCells = document.querySelectorAll('.grid');
 
+// add event listener to each cell to draw on grid when mouse hovers over
+const drawEventListener = () => {
+  gridCells.forEach(cell => cell.addEventListener('mouseenter', draw(cell)));
+}
+
+drawEventListener()
+
 // clear button functionality, remove 'hovered' fom all gridCells
 const clearCells = () => {
   gridCells.forEach(cell => cell.style.backgroundColor = 'white');
+  gridCells.forEach(cell => cell.style.opacity = '');
 }
 
 clearButton.addEventListener('click', clearCells);
@@ -94,11 +104,18 @@ resizeButton.addEventListener('click', resizeGrid);
 // rainbow button
 rainbowButton.addEventListener('click', () => {
   mode = 'rainbow';
+  drawEventListener();
 })
 
 // classic button
 classicButton.addEventListener('click', () => {
   mode = 'classic';
+  drawEventListener();
+})
+
+shadeButton.addEventListener('click', () => {
+  mode = 'shading'  
+  drawEventListener();
 })
 
 const selectButton = (button) => {
@@ -109,66 +126,3 @@ const selectButton = (button) => {
   }
   button.classList.add('btn-on');
 }
-
-// const changeMode = () => {
-//   modeButtons[0].classList.add('btn-on');
-
-//   modeButtons.forEach(selection => {
-//     selection.addEventListener('click', () => {
-//       if (selection.classList.contains('classic')) {
-//         draw('classic');
-//         selectButton(selection);
-//         mode = 'classic';
-//       }
-//     })
-//   })
-// }
-
-// // button styling for when active
-// for (let i = 0; i < colorButtons.length; i++) {
-//   colorButtons[i].addEventListener('click', () => {
-//     colorButtons[i].classList.toggle('btn-on');
-//   })
-// }
-
-// // shade toggle
-// let shading = false;
-// shadeButton.addEventListener('click', () => {
-//   if (shading) {
-//     shading = false;
-//   } else {
-//     shading = true;
-//     rainbow = false;
-//     rainbowButton.classList.remove('btn-on');
-//     classic = false;
-//     classicButton.classList.remove('btn-on');
-//   }
-// })
-
-// // rainbow toggle
-// let rainbow = false;
-// rainbowButton.addEventListener('click', () => {
-//   if (rainbow) {
-//     rainbow = false;
-//   } else {
-//     rainbow = true;
-//     shading = false;
-//     shadeButton.classList.remove('btn-on');
-//     classic = false;
-//     classicButton.classList.remove('btn-on');
-//   }
-// })
-
-// // classic toggle
-// let classic = true;
-// rainbowButton.addEventListener('click', () => {
-//   if (classic) {
-//     classic = false;
-//   } else {
-//     classic = true;
-//     rainbow = false;
-//     rainbowButton.classList.remove('btn-on');
-//     shading = false;
-//     shadeButton.classList.remove('btn-on');
-//   }
-// })
